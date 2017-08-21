@@ -14,4 +14,14 @@ class Role extends Model
     protected $fillable = [
         'name'
     ];
+
+    /**
+     * Accessor for the "Name" column.
+     *
+     * @param $value
+     * @return string
+     */
+    public function getNameAttribute($value) {
+        return ucfirst($value);
+    }
 }

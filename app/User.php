@@ -12,7 +12,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'role_id', 'is_active', 'name', 'email', 'password', 'photo_id',
     ];
 
     /**
@@ -25,11 +25,31 @@ class User extends Authenticatable
     ];
 
     /**
+     * Possible options for the status field.
+     * [0 - Not Active, 1 - Active]
+     *
+     * @var array
+     */
+    protected static $statusFieldOptions = [
+        1 => 'Active',
+        0 => 'Not Active'
+    ];
+
+    /**
      * Eloquent One to One relation.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function role() {
         return $this->belongsTo('App\Role');
+    }
+
+    /**
+     * Get and return as array available status options.
+     *
+     * @return array
+     */
+    public static function getStatusOptions() {
+        return self::$statusFieldOptions;
     }
 }

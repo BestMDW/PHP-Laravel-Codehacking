@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UsersRequest;
+use App\Role;
+use App\User;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -15,8 +18,11 @@ class AdminUsersController extends Controller
      */
     public function index()
     {
+        // Get all users.
+        $users = User::all();
+
         // Load view from "resources\views\admin\users\index.blade.php"
-        return view('admin.users.index');
+        return view('admin.users.index', compact('users'));
     }
 
     /**
@@ -26,8 +32,10 @@ class AdminUsersController extends Controller
      */
     public function create()
     {
+        $statusFieldOptions = User::getStatusOptions();
+        $roles = Role::lists('name', 'id')->all();
         // Load view from "resources\views\admin\users\create.blade.php"
-        return view('admin.users.create');
+        return view('admin.users.create', compact('statusFieldOptions', 'roles'));
     }
 
     /**
@@ -36,9 +44,13 @@ class AdminUsersController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UsersRequest $request)
     {
-        //
+        // Create new user.
+        User::create($request->all());
+
+        // Redirect to the users list in the administrator panel.
+        return redirect('/admin/users');
     }
 
     /**
