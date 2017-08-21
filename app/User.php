@@ -6,6 +6,9 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
+    /** Directory for the uploads files. */
+    const UPLOAD_DIRECTORY = 'uploads/photos';
+
     /**
      * The attributes that are mass assignable.
      *
@@ -36,12 +39,21 @@ class User extends Authenticatable
     ];
 
     /**
-     * Eloquent One to One relation.
+     * Eloquent One to One relation for the role.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function role() {
         return $this->belongsTo('App\Role');
+    }
+
+    /**
+     * Eloquent One to One relation for the photo.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function photo() {
+        return $this->belongsTo('App\Photo');
     }
 
     /**
@@ -51,5 +63,14 @@ class User extends Authenticatable
      */
     public static function getStatusOptions() {
         return self::$statusFieldOptions;
+    }
+
+    /**
+     * Mutator for the password field, protects password in the database.
+     *
+     * @param $value - Password to save in the database.
+     */
+    public function setPasswordAttribute($value) {
+        $this->attributes['password'] = bcrypt($value);
     }
 }

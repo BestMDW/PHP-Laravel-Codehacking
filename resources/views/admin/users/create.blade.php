@@ -14,7 +14,7 @@
         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
             {!! Form::label('email', 'Email:') !!}
             {!! Form::email('email', null, ['class' => 'form-control']) !!}
-            @if ($errors->has('email'))
+            @if($errors->has('email'))
                 <span class="help-block">
                     <strong>{{ $errors->first('email') }}</strong>
                 </span>
@@ -23,20 +23,29 @@
         <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
             {!! Form::label('password', 'Password:') !!}
             {!! Form::password('password', ['class' => 'form-control']) !!}
-            @if ($errors->has('password'))
+            @if($errors->has('password'))
                 <span class="help-block">
                     <strong>{{ $errors->first('password') }}</strong>
                 </span>
             @endif
         </div>
+        <div class="form-group{{ $errors->has('password_confirm') ? ' has-error' : '' }}">
+            {!! Form::label('password_confirmation', 'Confirm Password:') !!}
+            {!! Form::password('password_confirmation', ['class' => 'form-control']) !!}
+            @if($errors->has('password_confirmation'))
+                <span class="help-block">
+                    <strong>{{ $errors->first('password_confirmation') }}</strong>
+                </span>
+            @endif
+        </div>
         <div class="form-group">
-            {!! Form::label('file', 'Avatar:') !!}
-            {!! Form::file('file', ['class' => 'form-control']) !!}
+            {!! Form::label('photo_id', 'Avatar:') !!}
+            {!! Form::file('photo_id', ['class' => 'form-control']) !!}
         </div>
         <div class="form-group{{ $errors->has('role_id') ? ' has-error' : '' }}">
             {!! Form::label('role_id', 'Role:') !!}
             {!! Form::select('role_id', ['' => 'Choose Options'] + $roles, null, ['class' => 'form-control']) !!}
-            @if ($errors->has('role_id'))
+            @if($errors->has('role_id'))
                 <span class="help-block">
                     <strong>{{ $errors->first('role_id') }}</strong>
                 </span>
@@ -55,11 +64,4 @@
             {!! Form::submit('Create User', ['class' => 'btn btn-primary']) !!}
         </div>
     {!! Form::close() !!}
-    @if($errors->count() > 0)
-        <ul>
-        @foreach($errors as $error)
-            <li>{{ $error }}</li>
-        @endforeach
-        </ul>
-    @endif
 @endsection
