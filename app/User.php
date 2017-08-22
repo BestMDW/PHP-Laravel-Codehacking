@@ -6,9 +6,6 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    /** Directory for the uploads files. */
-    const UPLOAD_DIRECTORY = 'uploads/photos';
-
     /**
      * The attributes that are mass assignable.
      *
@@ -68,9 +65,9 @@ class User extends Authenticatable
     /**
      * Mutator for the password field, protects password in the database.
      *
-     * @param $value - Password to save in the database.
+     * @param $photo - Password to save in the database.
      */
-    public function setPasswordAttribute($value) {
-        $this->attributes['password'] = bcrypt($value);
+    public function setPasswordAttribute($photo) {
+        $this->attributes['password'] = bcrypt($photo);
     }
 }

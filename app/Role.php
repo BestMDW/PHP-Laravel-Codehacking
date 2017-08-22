@@ -18,10 +18,10 @@ class Role extends Model
     /**
      * Accessor for the "Name" column.
      *
-     * @param $value
+     * @param $name
      * @return string
      */
-    public function getNameAttribute($value) {
-        return ucfirst($value);
+    public function getNameAttribute($name) {
+        return ucfirst($name);
     }
 }
