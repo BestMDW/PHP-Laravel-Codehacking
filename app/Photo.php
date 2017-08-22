@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Photo extends Model
 {
     /** Directory for the uploads files. */
-    const UPLOAD_DIRECTORY = 'uploads/photos';
+    const UPLOAD_DIRECTORY = 'storage/photos';
     /** Placeholder path. */
     const PLACEHOLDER = '/images/default-placeholder-300x300.png';
 
@@ -15,6 +15,8 @@ class Photo extends Model
     protected $fillable = [
         'path'
     ];
+
+    /******************************************************************************************************************/
 
     /** Accessor for the path attribute, adds directory for the uploaded files. */
     public function getPathAttribute($value) {

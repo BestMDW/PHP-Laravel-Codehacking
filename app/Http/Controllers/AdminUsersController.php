@@ -7,9 +7,7 @@ use App\Http\Requests\UsersRequest;
 use App\Photo;
 use App\Role;
 use App\User;
-use Illuminate\Http\Request;
-
-use App\Http\Requests;
+use Illuminate\Support\Facades\Session;
 
 class AdminUsersController extends Controller
 {
@@ -29,6 +27,8 @@ class AdminUsersController extends Controller
         return view('admin.users.index', compact('users', 'placeholder'));
     }
 
+    /******************************************************************************************************************/
+
     /**
      * Show the form for creating a new resource.
      *
@@ -43,6 +43,8 @@ class AdminUsersController extends Controller
         // Load view from "resources\views\admin\users\create.blade.php"
         return view('admin.users.create', compact('statusFieldOptions', 'roles'));
     }
+
+    /******************************************************************************************************************/
 
     /**
      * Store a newly created resource in storage.
@@ -73,20 +75,14 @@ class AdminUsersController extends Controller
         // Create new user.
         User::create($input);
 
+        // Save message for show on the users list page.
+        Session::flash('toastMessage', 'User ' . $input['name'] . ' has been added.');
+
         // Redirect to the users list in the administrator panel.
         return redirect()->route('admin.users.index');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+    /******************************************************************************************************************/
 
     /**
      * Show the form for editing the specified resource.
@@ -108,6 +104,8 @@ class AdminUsersController extends Controller
         // Load view from "resources\views\admin\users\edit.blade.php"
         return view('admin.users.edit', compact('user', 'statusFieldOptions', 'roles', 'placeholder'));
     }
+
+    /******************************************************************************************************************/
 
     /**
      * Update the specified resource in storage.
@@ -148,9 +146,14 @@ class AdminUsersController extends Controller
         // Update user.
         $user->update($input);
 
+        // Save message for show on the users list page.
+        Session::flash('toastMessage', 'User ' . $user->name . ' has been updated.');
+
         // Redirect to the list of the users.
         return redirect()->route('admin.users.index');
     }
+
+    /******************************************************************************************************************/
 
     /**
      * Remove the specified resource from storage.
@@ -160,6 +163,19 @@ class AdminUsersController extends Controller
      */
     public function destroy($id)
     {
-        //
+        // Find user with specific ID.
+        $user = User::findOrFail($id);
+
+        // Delete user's photo from the directory.
+        unlink(public_path() . $user->photo->path);
+
+        // Remove user from the database.
+        $user->delete();
+
+        // Save message for show on the users list page.
+        Session::flash('toastMessage', 'The user has been deleted.');
+
+        // Redirect to the list of the users.
+        return redirect()->route('admin.users.index');
     }
 }

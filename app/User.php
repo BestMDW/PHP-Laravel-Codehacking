@@ -70,4 +70,20 @@ class User extends Authenticatable
     public function setPasswordAttribute($photo) {
         $this->attributes['password'] = bcrypt($photo);
     }
+
+    /**
+     * Checks if user has administrator role.
+     *
+     * @return bool
+     */
+    public function isAdmin() {
+        // Check if user role is administrator.
+        if ($this->role->name == "Administrator" && $this->is_active == 1) {
+            // Return true if is administrator.
+            return true;
+        }
+
+        // Return false if not administrator.
+        return false;
+    }
 }

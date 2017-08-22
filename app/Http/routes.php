@@ -19,9 +19,13 @@ Route::auth();
 
 Route::get('/home', 'HomeController@index');
 
-Route::get('/admin', function() {
-    return view('admin.index');
+// Route group for the administration panel.
+Route::group(['middleware' => 'admin'], function() {
+    Route::get('/admin', function() {
+        return view('admin.index');
+    });
+
+    // Resource controller for administrator panel of users.
+    Route::resource('/admin/users', 'AdminUsersController');
 });
 
-// Resource controller for administrator panel of users.
-Route::resource('/admin/users', 'AdminUsersController');
