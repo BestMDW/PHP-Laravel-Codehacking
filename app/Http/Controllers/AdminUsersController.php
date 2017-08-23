@@ -114,7 +114,7 @@ class AdminUsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UsersEditRequest $request, $id)
+    public function update(UsersRequest $request, $id)
     {
         // Find and get user with specific id.
         $user = User::findOrFail($id);

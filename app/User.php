@@ -35,6 +35,8 @@ class User extends Authenticatable
         0 => 'Not Active'
     ];
 
+    /******************************************************************************************************************/
+
     /**
      * Eloquent One to One relation for the role.
      *
@@ -43,6 +45,8 @@ class User extends Authenticatable
     public function role() {
         return $this->belongsTo('App\Role');
     }
+
+    /******************************************************************************************************************/
 
     /**
      * Eloquent One to One relation for the photo.
@@ -53,6 +57,19 @@ class User extends Authenticatable
         return $this->belongsTo('App\Photo');
     }
 
+    /******************************************************************************************************************/
+
+    /**
+     * Eloquent One to Many relation for the posts.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function posts() {
+        return $this->hasMany('App\Post');
+    }
+
+    /******************************************************************************************************************/
+
     /**
      * Get and return as array available status options.
      *
@@ -62,6 +79,8 @@ class User extends Authenticatable
         return self::$statusFieldOptions;
     }
 
+    /******************************************************************************************************************/
+
     /**
      * Mutator for the password field, protects password in the database.
      *
@@ -70,6 +89,8 @@ class User extends Authenticatable
     public function setPasswordAttribute($photo) {
         $this->attributes['password'] = bcrypt($photo);
     }
+
+    /******************************************************************************************************************/
 
     /**
      * Checks if user has administrator role.

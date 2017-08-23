@@ -25,7 +25,9 @@ Route::group(['middleware' => 'admin'], function() {
         return view('admin.index');
     });
 
-    // Resource controller for administrator panel of users.
+    // Resource controller for the users section in the administrator panel.
     Route::resource('/admin/users', 'AdminUsersController');
+    // Resource controller for the posts section in the administrator panel.
+    Route::resource('/admin/posts', 'AdminPostsController');
 });
 
