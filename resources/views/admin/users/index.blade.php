@@ -1,11 +1,6 @@
 @extends('layouts.admin')
 @section('content')
-    @if(Session::has('toastMessage'))
-        <div class="alert alert-success alert-dismissable fade in">
-            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-            <strong>Success!</strong> {{ session('toastMessage') }}
-        </div>
-    @endif
+    @include('includes.toast_message')
     <h1>Users</h1>
     <table class="table table-striped table-hover">
         <thead>
