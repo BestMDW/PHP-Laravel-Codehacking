@@ -12,6 +12,7 @@
                 {!! Form::submit('Add Category', ['class' => 'btn btn-primary']) !!}
             </div>
         {!! Form::close() !!}
+        @include('includes.form_error')
     </div>
     <div class="col-sm-9">
         @if($categories->count() > 0)

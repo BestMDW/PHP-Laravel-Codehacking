@@ -84,7 +84,13 @@ class AdminCategoriesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // Find category with specific ID and update.
+        Category::findOrFail($id)->update($request->all());
+
+        Session::flash('toastMessage', 'Category "' . $request['name'] . '" has been updated.');
+
+        // Redirect to the list of categories in the administrator panel.
+        return redirect()->route('admin.categories.index');
     }
 
     /**
@@ -95,6 +101,16 @@ class AdminCategoriesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        // Find category with specific ID and delete.
+        $category = Category::findOrFail($id);
+        // Save name of the category for the toast message.
+        $name = $category->name;
+        // Delete this category.
+        $category->delete();
+
+        Session::flash('toastMessage', 'Category "' . $name . '" has been deleted.');
+
+        // Redirect to the list of categories in the administrator panel.
+        return redirect()->route('admin.categories.index');
     }
 }
