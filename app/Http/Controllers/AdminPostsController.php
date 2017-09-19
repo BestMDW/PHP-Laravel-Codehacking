@@ -22,7 +22,7 @@ class AdminPostsController extends Controller
     public function index()
     {
         // Get all posts.
-        $posts = Post::all();
+        $posts = Post::paginate(15);
         // Get placeholder path.
         $placeholder = Photo::PLACEHOLDER;
 
@@ -40,7 +40,7 @@ class AdminPostsController extends Controller
     public function create()
     {
         // Load available categories.
-        $categories = Category::lists('name', 'id')->all();
+        $categories = Category::pluck('name', 'id')->all();
 
         // Load view from "resources\views\admin\posts\create.blade.php"
         return view('admin.posts.create', compact('categories'));
@@ -111,10 +111,13 @@ class AdminPostsController extends Controller
         $post = Post::findOrFail($id);
 
         // Load available categories.
-        $categories = Category::lists('name', 'id')->all();
+        $categories = Category::pluck('name', 'id')->all();
+
+        // Placeholder
+        $placeholder = Photo::PLACEHOLDER;
 
         // Load view from "resources\views\admin\posts\edit.blade.php"
-        return view('admin.posts.edit', compact('post', 'categories'));
+        return view('admin.posts.edit', compact('post', 'categories', 'placeholder'));
     }
 
     /******************************************************************************************************************/
@@ -182,5 +185,24 @@ class AdminPostsController extends Controller
 
         // Redirect to the list of the posts in the administration panel.
         return redirect()->route('admin.posts.index');
+    }
+
+    /******************************************************************************************************************/
+
+    /**
+     * Shows specific post.
+     *
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function post($slug)
+    {
+        // Find and get post with specific ID.
+        $post = Post::findBySlugOrFail($slug);
+        $comments = $post->comments()->whereIsActive(1)->get();
+        $placeholder = Photo::PLACEHOLDER;
+
+        // Load view from "resources\views\post.blade.php"
+        return view('post', compact('post', 'comments', 'placeholder'));
     }
 }

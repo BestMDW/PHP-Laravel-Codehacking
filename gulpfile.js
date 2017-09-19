@@ -23,6 +23,13 @@ elixir(function(mix) {
             'libs/styles.css'
         ], './public/css/libs.css')
 
+        .styles([
+            'libs/bootstrap.min.css',
+            'libs/blog-home.css',
+            'libs/font-awesome.css',
+            'libs/styles.css'
+        ], './public/css/libs2.css')
+
         .scripts([
             'libs/jquery.js',
             'libs/bootstrap.js',
@@ -30,4 +37,9 @@ elixir(function(mix) {
             'libs/sb-admin-2.js',
             'libs/scripts.js'
         ], './public/js/libs.js')
+
+        .scripts([
+            'libs/jquery.js',
+            'libs/bootstrap.min.js'
+        ], './public/js/libs2.js')
 });

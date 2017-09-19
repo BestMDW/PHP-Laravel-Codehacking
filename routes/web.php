@@ -2,12 +2,12 @@
 
 /*
 |--------------------------------------------------------------------------
-| Application Routes
+| Web Routes
 |--------------------------------------------------------------------------
 |
-| Here is where you can register all of the routes for an application.
-| It's a breeze. Simply tell Laravel the URIs it should respond to
-| and give it the controller to call when that URI is requested.
+| This file is where you may define all of the routes that are handled
+| by your application. Just tell Laravel the URIs it should respond
+| to using a Closure or controller method. Build something great!
 |
 */
 
@@ -15,14 +15,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::auth();
+Auth::routes();
 
 Route::get('/home', 'HomeController@index');
-
+Route::get('/logout', 'Auth\LoginController@logout');
 Route::get('/post/{id}', ['as' => 'home.post', 'uses' => 'AdminPostsController@post']);
 
 // Route group for the administration panel.
-Route::group(['middleware' => 'admin'], function() {
+Route::group(['as' => 'admin.', 'middleware' => 'admin'], function() {
     Route::get('/admin', function() {
         return view('admin.index');
     });

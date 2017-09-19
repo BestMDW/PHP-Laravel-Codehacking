@@ -15,7 +15,7 @@ class AdminMediasController extends Controller
     public function index()
     {
         // Get all photos.
-        $photos = Photo::all();
+        $photos = Photo::paginate(15);
 
         // Load view from the resource "resources/admin/media/index.blade.php"
         return view('admin.media.index', compact('photos'));

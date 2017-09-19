@@ -19,7 +19,7 @@ class AdminUsersController extends Controller
     public function index()
     {
         // Get all users.
-        $users = User::all();
+        $users = User::paginate(15);
         // Get placeholder path.
         $placeholder = Photo::PLACEHOLDER;
 
@@ -39,7 +39,7 @@ class AdminUsersController extends Controller
         // Load available status options for the user.
         $statusFieldOptions = User::getStatusOptions();
         // Load available roles which user can have.
-        $roles = Role::lists('name', 'id')->all();
+        $roles = Role::pluck('name', 'id')->all();
         // Load view from "resources\views\admin\users\create.blade.php"
         return view('admin.users.create', compact('statusFieldOptions', 'roles'));
     }
@@ -56,6 +56,7 @@ class AdminUsersController extends Controller
     {
         // Get all data from the post.
         $input = $request->all();
+        $input['password'] = bcrypt($input['password']);
 
         // Check if photo was uploaded.
         if ($file = $request->file('photo_id')) {
@@ -97,7 +98,7 @@ class AdminUsersController extends Controller
         // Load available status options for the user.
         $statusFieldOptions = User::getStatusOptions();
         // Load available roles which user can have.
-        $roles = Role::lists('name', 'id')->all();
+        $roles = Role::pluck('name', 'id')->all();
         // Placeholder file name.
         $placeholder = Photo::PLACEHOLDER;
 
@@ -126,6 +127,7 @@ class AdminUsersController extends Controller
         } else {
             // New password is provided, get everything from post.
             $input = $request->all();
+            $input['password'] = bcrypt($input['password']);
         }
 
         // Check if photo was uploaded.

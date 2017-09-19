@@ -2,6 +2,8 @@
 
 return [
 
+    'name' => 'Codehacking',
+
     /*
     |--------------------------------------------------------------------------
     | Application Environment
@@ -39,7 +41,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://localhost'),
+    'url' => env('APP_URL', 'http://codehacking.dev'),
 
     /*
     |--------------------------------------------------------------------------
@@ -148,6 +150,7 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
+        Cviebrock\EloquentSluggable\ServiceProvider::class,
 
         /*
          * Application Service Providers...

@@ -26,7 +26,7 @@ class PostsRequest extends Request
         return [
             'title' => 'required|max:255',
             'category_id' => 'required',
-            'photo_id' => 'required',
+            'photo_id' => 'sometimes|required',
             'body' => 'required|min:12',
         ];
     }

@@ -82,29 +82,32 @@ class User extends Authenticatable
     /******************************************************************************************************************/
 
     /**
-     * Mutator for the password field, protects password in the database.
-     *
-     * @param $photo - Password to save in the database.
-     */
-    public function setPasswordAttribute($photo) {
-        $this->attributes['password'] = bcrypt($photo);
-    }
-
-    /******************************************************************************************************************/
-
-    /**
      * Checks if user has administrator role.
      *
      * @return bool
      */
     public function isAdmin() {
         // Check if user role is administrator.
-        if ($this->role->name == "Administrator" && $this->is_active == 1) {
+        if ($this->role && $this->role->name == "Administrator" && $this->is_active == 1) {
             // Return true if is administrator.
             return true;
         }
 
         // Return false if not administrator.
         return false;
+    }
+
+    /******************************************************************************************************************/
+
+    /**
+     * Generates gravatar for the User.
+     *
+     * @return string
+     */
+    public function getGravatarAttribute()
+    {
+        $hash = md5(strtolower(trim($this->attributes['email']))) . "?d=mm";
+
+        return "https://www.gravatar.com/avatar/$hash";
     }
 }
