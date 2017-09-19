@@ -8,7 +8,7 @@
             <img class="card-img-top" src="{{ $post->photo->path }}" alt="">
         @endif
         <div class="card-body">
-            <p class="card-text">{{ $post->body }}</p>
+            <p class="card-text">{!! $post->body !!}</p>
         </div>
         <div class="card-footer text-muted">
             Posted on {{ $post->created_at->diffForHumans() }} by
