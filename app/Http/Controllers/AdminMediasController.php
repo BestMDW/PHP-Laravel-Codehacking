@@ -70,4 +70,31 @@ class AdminMediasController extends Controller
         // Redirect to the list of the media.
         return redirect()->route('admin.media.index');
     }
+
+    /******************************************************************************************************************/
+
+    /**
+     * Bulk media delete.
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function deleteMedia(Request $request)
+    {
+        if (!empty($request->checkBoxArray))
+        {
+            // Get all photos for deletion.
+            $photos = Photo::findOrFail($request->checkBoxArray);
+
+            // Loop all records, remove files and delete from the database.
+            foreach ($photos as $photo)
+            {
+                @unlink($photo->path);
+                $photo->delete();
+            }
+        }
+
+        // Redirect to the list of the media.
+        return redirect()->back();
+    }
 }

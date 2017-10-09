@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+d@extends('layouts.admin')
 @section('content')
     <h1>Post Comments</h1>
     @if($comments->count() > 0)

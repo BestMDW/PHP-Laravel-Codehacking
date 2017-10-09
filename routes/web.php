@@ -11,13 +11,10 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::resource('/', 'PostsController');
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index');
 Route::get('/logout', 'Auth\LoginController@logout');
 Route::get('/post/{id}', ['as' => 'home.post', 'uses' => 'AdminPostsController@post']);
 
@@ -35,6 +32,7 @@ Route::group(['as' => 'admin.', 'middleware' => 'admin'], function() {
     Route::resource('/admin/categories', 'AdminCategoriesController');
     // Resource controller for the media section in the administration panel.
     Route::resource('/admin/media', 'AdminMediasController');
+    Route::delete('/admin/delete/media', 'AdminMediasController@deleteMedia');
     // Resource controller for the comments.
     Route::resource('/admin/comments', 'PostCommentsController');
     // Resource controller for the comments replies.

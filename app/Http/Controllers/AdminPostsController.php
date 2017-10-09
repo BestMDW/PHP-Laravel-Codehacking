@@ -201,8 +201,9 @@ class AdminPostsController extends Controller
         $post = Post::findBySlugOrFail($slug);
         $comments = $post->comments()->whereIsActive(1)->get();
         $placeholder = Photo::PLACEHOLDER;
+        $categories = Category::all();
 
         // Load view from "resources\views\post.blade.php"
-        return view('post', compact('post', 'comments', 'placeholder'));
+        return view('post', compact('post', 'comments', 'placeholder', 'categories'));
     }
 }

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<ost/my-first-post-edited#!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Blog Home - Start Bootstrap Template</title>
+    <title>Blog Home</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="{{asset('css/app.css')}}" rel="stylesheet">
@@ -22,26 +22,38 @@
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
-        <a class="navbar-brand" href="#">Start Bootstrap</a>
+        <a class="navbar-brand" href="/">Start Bootstrap</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Home
-                        <span class="sr-only">(current)</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">About</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Services</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Contact</a>
-                </li>
+                <!-- Authentication Links -->
+                @if (Auth::guest())
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url('/login') }}">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url('/register') }}">Register</a>
+                    </li>
+                @else
+                    @if (Auth::user()->isAdmin())
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url('/admin') }}">Admin Panel</a>
+                        </li>
+                    @endif
+                    <li class="nav-item">
+                        <div class="dropdown">
+                            <button href="#" class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown">
+                                {{ Auth::user()->name }}
+                            </button>
+
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Logout</a>
+                            </div>
+                        </div>
+                    </li>
+                @endif
             </ul>
         </div>
     </div>
@@ -82,28 +94,20 @@
                     <div class="row">
                         <div class="col-lg-6">
                             <ul class="list-unstyled mb-0">
-                                <li>
-                                    <a href="#">Web Design</a>
-                                </li>
-                                <li>
-                                    <a href="#">HTML</a>
-                                </li>
-                                <li>
-                                    <a href="#">Freebies</a>
-                                </li>
+                                @for($i = 0; $i < $categories->count() / 2; $i++)
+                                    <li>
+                                        <a href="#">{{ $categories[$i]->name }}</a>
+                                    </li>
+                                @endfor
                             </ul>
                         </div>
                         <div class="col-lg-6">
                             <ul class="list-unstyled mb-0">
-                                <li>
-                                    <a href="#">JavaScript</a>
-                                </li>
-                                <li>
-                                    <a href="#">CSS</a>
-                                </li>
-                                <li>
-                                    <a href="#">Tutorials</a>
-                                </li>
+                                @for($i = $categories->count() / 2; $i < $categories->count(); $i++)
+                                    <li>
+                                        <a href="#">{{ $categories[$i]->name }}</a>
+                                    </li>
+                                @endfor
                             </ul>
                         </div>
                     </div>
@@ -136,6 +140,7 @@
 
 <!-- Bootstrap core JavaScript -->
 <script src="{{asset('js/libs2.js')}}"></script>
+
 @yield('scripts')
 
 </body>
